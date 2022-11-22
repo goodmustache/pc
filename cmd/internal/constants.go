@@ -23,8 +23,9 @@ Warnings:
  Skipping Validation, will proceed to next command
 ===================================================`
 
-	ValidationMessage = `===============================================
- Are you sure you would like to proceed (y/N):`
+	ValidationMessage = `
+===============================
+ Proceed with this data (y/N):`
 
-	ValidationMessageBannor = `===============================================`
+	ValidationMessageBannor = `===============================`
 )
