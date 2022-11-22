@@ -14,8 +14,9 @@ import (
 var ErrExit = errors.New("user negatively confirmed input")
 
 type Process struct {
-	SkipValidation bool `long:"skip-validation" description:"skips waiting for human validation" env:"PC_SKIP_VALIDATION"`
-	Version        bool `long:"version" short:"v" description:"display version"`
+	SkipValidation bool  `long:"skip-validation" description:"skips waiting for human validation" env:"PC_SKIP_VALIDATION"`
+	BufferSize     int64 `long:"buffer-size" short:"b" default:"52428800" description:"size of the STDIN temporary buffer in bytes"`
+	Version        bool  `long:"version" short:"v" description:"display version"`
 
 	StdIn        io.Reader
 	StdOut       io.Writer
@@ -37,7 +38,7 @@ func (p Process) Execute(_ []string) error {
 	fmt.Fprintln(p.StdErr, internal.Bannor)
 
 	// Read STDIN into STDOUT and buffer
-	inputBuffer := bytes.NewBuffer(make([]byte, 0, internal.DefaultInputBufferSize))
+	inputBuffer := bytes.NewBuffer(make([]byte, 0, p.BufferSize))
 	combinedWriter := io.MultiWriter(p.StdErr, inputBuffer)
 	_, err := io.CopyBuffer(combinedWriter, p.StdIn, make([]byte, internal.CopyBufferSize))
 	if err != nil {
