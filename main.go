@@ -2,43 +2,17 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
-	"strings"
+
+	"github.com/goodmustache/pc/cmd"
 )
 
-const BannerWidth = 70
-
 func main() {
-	prevCommandOutput, err := ioutil.ReadAll(os.Stdin)
+	err := cmd.ParseAndRun(os.Args)
 	if err != nil {
-		handleError(fmt.Errorf("PC ERROR - Unable to read from STDIN: %w", err))
+		if err != cmd.ErrExit {
+			fmt.Fprintf(os.Stderr, "PipeCheck Error: %s\n", err.Error())
+		}
+		os.Exit(1)
 	}
-
-	printHeader()
-
-	_, err = os.Stderr.Write(prevCommandOutput)
-	if err != nil {
-		handleError(fmt.Errorf("PC ERROR - Unable to write to STDERR: %w", err))
-	}
-
-	_, err = os.Stdout.Write(prevCommandOutput)
-	if err != nil {
-		handleError(fmt.Errorf("PC ERROR - Unable to write to STDOUT: %w", err))
-	}
-}
-
-func printHeader() {
-	output(strings.Repeat("=", BannerWidth) + "\n")
-	output("PipeCheck: The following was read in and will be passed through\n")
-	output(strings.Repeat("=", BannerWidth) + "\n")
-}
-
-func output(f string, opts ...any) {
-	fmt.Fprintf(os.Stderr, f, opts...)
-}
-
-func handleError(err error) {
-	fmt.Fprintf(os.Stderr, "ERROR: %s", err.Error())
-	os.Exit(1)
 }
