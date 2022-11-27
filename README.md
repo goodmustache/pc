@@ -1,5 +1,5 @@
-# pc
-Pipecheck - is a tool to help debug / test pipe'd commands on your terminal:
+# PipeCheck (pc) [![build-and-test](https://github.com/goodmustache/pc/workflows/build-and-test/badge.svg?branch=main)]
+Pipecheck is a tool to help debug / test pipe'd commands on your terminal:
 
 ```bash
 $ echo "foo\nbar\nbaz" | pc | xargs -n 1 echo -
