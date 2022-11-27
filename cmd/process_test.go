@@ -37,14 +37,14 @@ var _ = Describe("Process", func() {
 			StdErr:         fakeErr,
 
 			GetUserInput: func(stream io.Writer) (byte, error) {
-				stream.Write([]byte(internal.ValidationMessage))
+				_, _ = stream.Write([]byte(internal.ValidationMessage))
 				return <-userInput, nil
 			},
 			OutputCompleteMessage: true,
 		}
 
 		pipedInput = []byte("I\nam\nsome-test\ninput")
-		fakeIn.Write(pipedInput)
+		_, _ = fakeIn.Write(pipedInput)
 
 		testInput = func(c rune) error {
 			complete := make(chan any)
