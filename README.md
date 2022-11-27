@@ -1,4 +1,4 @@
-# PipeCheck (pc) [![build-and-test](https://github.com/goodmustache/pc/workflows/build-and-test/badge.svg?branch=main)]
+# PipeCheck (pc) [![build-and-test](https://github.com/goodmustache/pc/workflows/build-and-test/badge.svg?branch=main)](https://github.com/goodmustache/pc/actions/workflows/build-test.yml)
 Pipecheck is a tool to help debug / test pipe'd commands on your terminal:
 
 ```bash
