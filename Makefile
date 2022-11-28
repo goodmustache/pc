@@ -10,11 +10,15 @@ build: pc
 clean:
 	rm -f ./pc
 
+.PHONY: lint
+lint:
+	golangci-lint run ./...
+
 pc: $(GOSRC)
 	go build -o pc  .
 
 .PHONY: test
-test:
+test: lint
 	go run github.com/onsi/ginkgo/v2/ginkgo run --randomize-all --race ./...
 
 .PHONY: watch-test
