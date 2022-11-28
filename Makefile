@@ -15,7 +15,7 @@ pc: $(GOSRC)
 
 .PHONY: test
 test:
-	go run github.com/onsi/ginkgo/v2/ginkgo run ./...
+	go run github.com/onsi/ginkgo/v2/ginkgo run --randomize-all --race ./...
 
 .PHONY: watch-test
 watch-test:

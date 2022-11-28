@@ -22,7 +22,7 @@ var _ = Describe("PipeCheck", Label("integration"), func() {
 	})
 
 	When("passed a piped command as input", func() {
-		It("outputs and blocks successfully", func() {
+		It("outputs and blocks successfully", Label("tty-required"), func() {
 			cmd := CreateCommand(`echo %s | {{.pcBinary}} | xargs -n 1 echo -`, shellescape.Quote("foo\nbar\nbaz"))
 			session := StartCommand(cmd)
 			defer session.Kill() // shutdown the process
