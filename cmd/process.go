@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"io"
@@ -33,13 +32,15 @@ func (p Process) Execute(_ []string) error {
 		return p.printVersion()
 	}
 
-	// Output Bannor
-	fmt.Fprintln(p.StdErr, internal.Bannor)
+	// Read STDIN into buffer
+	inputBuffer, err := io.ReadAll(p.StdIn)
+	if err != nil {
+		return err
+	}
 
-	// Read STDIN into STDOUT and buffer
-	inputBuffer := bytes.NewBuffer(make([]byte, 0, internal.InitialStdinBufferSize))
-	combinedWriter := io.MultiWriter(p.StdErr, inputBuffer)
-	_, err := io.CopyBuffer(combinedWriter, p.StdIn, make([]byte, internal.CopyBufferSize))
+	// Output Bannor and buffer into STDERR
+	fmt.Fprintln(p.StdErr, internal.Bannor)
+	_, err = p.StdErr.Write(inputBuffer)
 	if err != nil {
 		return err
 	}

@@ -57,6 +57,15 @@ var _ = Describe("PipeCheck", Label("integration"), func() {
 			Eventually(session).WithTimeout(3 * time.Second).Should(Exit(1))
 		})
 
+		It("does not output banner until previous commands complete", func() {
+			cmd := CreateCommand(`sleep 3 && echo %s | {{.pcBinary}} --skip-validation | xargs -n 1 echo -`, shellescape.Quote("foo\nbar\nbaz"))
+			session := StartCommand(cmd)
+
+			Consistently(session.Err).WithTimeout(2 * time.Second).ShouldNot(Say("PipeCheck: The following was read in and will be passed through:"))
+			Eventually(session.Err).WithTimeout(2 * time.Second).Should(Say("PipeCheck: The following was read in and will be passed through:"))
+			Eventually(session).Should(Exit(0))
+		})
+
 		When("skip-validation flag is passed", func() {
 			It("outputs and continues successfully", func() {
 				cmd := CreateCommand(`echo %s | {{.pcBinary}} --skip-validation | xargs -n 1 echo -`, shellescape.Quote("foo\nbar\nbaz"))
