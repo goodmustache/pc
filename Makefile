@@ -10,6 +10,10 @@ build: pc
 clean:
 	rm -f ./pc
 
+.PHONY: install
+install: pc
+	go install .
+
 .PHONY: lint
 lint:
 	golangci-lint run ./...
