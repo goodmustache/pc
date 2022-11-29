@@ -13,11 +13,21 @@ import (
 )
 
 var _ = Describe("PipeCheck", Label("integration"), func() {
-	When("-h / --help flag is passed", func() {
-		It("outputs the help text", func() {
-			session := StartCommand(exec.Command(pcBinary, "-h"))
+	When("help flag is passed", func() {
+		When("-h flag is passed", func() {
+			It("outputs the help text", func() {
+				session := StartCommand(exec.Command(pcBinary, "-h"))
 
-			Eventually(session).Should(Say("PipeCheck will output data received from STDIN to STDERR\\."))
+				Eventually(session).Should(Say("PipeCheck will output data received from STDIN to STDERR\\."))
+			})
+		})
+
+		When("--help flag is passed", func() {
+			It("outputs the help text", func() {
+				session := StartCommand(exec.Command(pcBinary, "--help"))
+
+				Eventually(session).Should(Say("PipeCheck will output data received from STDIN to STDERR\\."))
+			})
 		})
 	})
 
