@@ -83,7 +83,7 @@ var _ = Describe("Process", func() {
 		executeErr = process.Execute(nil)
 		Expect(executeErr).ToNot(HaveOccurred())
 
-		Expect(fakeErr).To(Say(internal.Bannor))
+		Expect(fakeErr).To(Say(internal.Banner))
 	})
 
 	It("outputs StdIn to StdErr", func() {

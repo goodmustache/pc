@@ -39,7 +39,7 @@ func (p Process) Execute([]string) error {
 	}
 
 	// Output Bannor and buffer into STDERR
-	fmt.Fprintln(p.StdErr, internal.Bannor)
+	fmt.Fprintln(p.StdErr, internal.Banner)
 	_, err = p.StdErr.Write(inputBuffer)
 	if err != nil {
 		return err

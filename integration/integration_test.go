@@ -17,7 +17,7 @@ var _ = Describe("PipeCheck", Label("integration"), func() {
 		It("outputs the help text", func() {
 			session := StartCommand(exec.Command(pcBinary, "-h"))
 
-			Eventually(session).Should(Say("PipeCheck will output data recieved from STDIN to STDERR\\."))
+			Eventually(session).Should(Say("PipeCheck will output data received from STDIN to STDERR\\."))
 		})
 	})
 
@@ -40,7 +40,7 @@ var _ = Describe("PipeCheck", Label("integration"), func() {
 			// Since we're unable to test the input, of "y" end test at blocking
 		})
 
-		It("termates when passed a 'ctrl+c' at input", Pending, func() {
+		It("terminates when passed a 'ctrl+c' at input", Pending, func() {
 			cmd := CreateCommand(`echo %s | {{.pcBinary}} | xargs -n 1 echo -`, shellescape.Quote("foo\nbar\nbaz"))
 			session := StartCommand(cmd)
 

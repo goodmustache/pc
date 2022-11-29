@@ -6,11 +6,11 @@ const (
 )
 
 const (
-	Bannor = `==================================================================
+	Banner = `==================================================================
  PipeCheck: The following was read in and will be passed through:
 ==================================================================`
 
-	LongDescription = `PipeCheck will output data recieved from STDIN to STDERR. It will then block on user confirmation in order to proceed with the chained (piped) commands.
+	LongDescription = `PipeCheck will output data received from STDIN to STDERR. It will then block on user confirmation in order to proceed with the chained (piped) commands.
 
 If the user decides to proceed, the data provided to STDIN will be directed to STDOUT and the process will terminate successfully. If the user decides **not** to proceed, the process will not send any data to STDOUT and it will terminate with a 1.
 
