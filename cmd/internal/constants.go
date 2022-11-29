@@ -2,7 +2,7 @@ package internal
 
 const (
 	CopyBufferSize         = 1024 * 1024      // 1 MB
-	DefaultInputBufferSize = 50 * 1024 * 1024 // 50 MB
+	InitialStdinBufferSize = 10 * 1024 * 1024 // 10 MB
 )
 
 const (
