@@ -26,7 +26,7 @@ type Process struct {
 	OutputCompleteMessage bool
 }
 
-func (p Process) Execute(_ []string) error {
+func (p Process) Execute([]string) error {
 	// Output version an exit when version flag passed.
 	if p.Version {
 		return p.printVersion()
@@ -45,18 +45,14 @@ func (p Process) Execute(_ []string) error {
 		return err
 	}
 
-	if p.SkipValidation {
-		// Output warning to STDOUT if skip is enabled
-		fmt.Fprintln(p.StdErr, internal.SkipValidationMessage)
-	} else {
-		// Send validation to STDOUT and wait on user input
-		err = p.validate()
-		if err != nil {
-			return err
-		}
+	// Validation check
+	err = p.validate()
+	if err != nil {
+		return err
 	}
 
-	_, err = io.CopyBuffer(p.StdOut, inputBuffer, make([]byte, internal.CopyBufferSize))
+	// Output buffer to STDOUT
+	_, err = p.StdOut.Write(inputBuffer)
 	if err != nil {
 		return err
 	}
@@ -73,6 +69,13 @@ func (p Process) printVersion() error {
 }
 
 func (p Process) validate() error {
+	// Output warning to STDOUT if skip is enabled
+	if p.SkipValidation {
+		fmt.Fprintln(p.StdErr, internal.SkipValidationMessage)
+		return nil
+	}
+
+	// Otherwise send validation to STDOUT and wait on user input
 	rawInput, err := p.GetUserInput(p.StdErr)
 	if err != nil {
 		return err
