@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"syscall"
 
 	"github.com/goodmustache/pc/cmd/internal"
 	"github.com/goodmustache/pc/version"
@@ -84,4 +85,21 @@ func (p Process) validate() error {
 		return ErrExit
 	}
 	return nil
+}
+
+func (Process) GetUserInputImpl(stream io.Writer) (byte, error) {
+	in, err := syscall.Open("/dev/tty", syscall.O_RDONLY, 0)
+	if err != nil {
+		return 0, fmt.Errorf("unable to reopen TTY: %w", err)
+	}
+
+	fmt.Fprint(stream, internal.ValidationMessage)
+	input := make([]byte, 1)
+	_, err = syscall.Read(in, input)
+	if err != nil {
+		return 0, fmt.Errorf("unable to read from user STDIN: %w", err)
+	}
+	fmt.Fprintln(stream, internal.ValidationMessageBannor)
+
+	return input[0], nil
 }
