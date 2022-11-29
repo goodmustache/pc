@@ -13,6 +13,24 @@ import (
 )
 
 var _ = Describe("PipeCheck", Label("integration"), func() {
+	When("version flag is passed", func() {
+		When("-v flag is passed", func() {
+			It("outputs the version", func() {
+				session := StartCommand(exec.Command(pcBinary, "-v"))
+
+				Eventually(session).Should(Say(`PipeCheck v\d+\.\d+\.\d+(-pre)?`))
+			})
+		})
+
+		When("--version flag is passed", func() {
+			It("outputs the version", func() {
+				session := StartCommand(exec.Command(pcBinary, "--version"))
+
+				Eventually(session).Should(Say(`PipeCheck v\d+\.\d+\.\d+(-pre)?`))
+			})
+		})
+	})
+
 	When("help flag is passed", func() {
 		When("-h flag is passed", func() {
 			It("outputs the help text", func() {

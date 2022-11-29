@@ -64,7 +64,7 @@ func (p Process) Execute([]string) error {
 }
 
 func (p Process) printVersion() error {
-	fmt.Fprintf(p.StdOut, "PipeCheck %s", version.Version)
+	fmt.Fprintf(p.StdOut, "PipeCheck v%s", version.Version)
 	return nil
 }
 

@@ -74,7 +74,7 @@ var _ = Describe("Process", func() {
 		It("returns the version and exits", func() {
 			executeErr = process.Execute(nil)
 			Expect(executeErr).ToNot(HaveOccurred())
-			Expect(fakeOut).To(Say(`PipeCheck \d+\.\d+\.\d+`))
+			Expect(fakeOut).To(Say(`PipeCheck v\d+\.\d+\.\d+`))
 			Expect(fakeErr.Contents()).To(BeEmpty())
 		})
 	})
