@@ -18,8 +18,8 @@ jobs:
     name: "build and test"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
       - name: build
