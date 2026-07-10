@@ -16,5 +16,5 @@ func TestCmd(t *testing.T) {
 // Log will write out to the Ginkgo logs. These only appear when a test fails
 // or running in verbose mode.
 func Log(f string, opts ...any) {
-	fmt.Fprintf(GinkgoWriter, f+"\n", opts...)
+	_, _ = fmt.Fprintf(GinkgoWriter, f+"\n", opts...)
 }

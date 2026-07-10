@@ -40,7 +40,7 @@ func (p Process) Execute([]string) error {
 	}
 
 	// Output Bannor and buffer into STDERR
-	fmt.Fprintln(p.StdErr, internal.Banner)
+	_, _ = fmt.Fprintln(p.StdErr, internal.Banner)
 	_, err = p.StdErr.Write(inputBuffer)
 	if err != nil {
 		return err
@@ -59,20 +59,20 @@ func (p Process) Execute([]string) error {
 	}
 
 	if p.OutputCompleteMessage {
-		fmt.Fprint(p.StdErr, "complete")
+		_, _ = fmt.Fprint(p.StdErr, "complete")
 	}
 	return nil
 }
 
 func (p Process) printVersion() error {
-	fmt.Fprintf(p.StdOut, "PipeCheck v%s", version.Version)
+	_, _ = fmt.Fprintf(p.StdOut, "PipeCheck v%s", version.Version)
 	return nil
 }
 
 func (p Process) validate() error {
 	// Output warning to STDOUT if skip is enabled
 	if p.SkipValidation {
-		fmt.Fprintln(p.StdErr, internal.SkipValidationMessage)
+		_, _ = fmt.Fprintln(p.StdErr, internal.SkipValidationMessage)
 		return nil
 	}
 
@@ -93,13 +93,13 @@ func (Process) GetUserInputImpl(stream io.Writer) (byte, error) {
 		return 0, fmt.Errorf("unable to reopen TTY: %w", err)
 	}
 
-	fmt.Fprint(stream, internal.ValidationMessage)
+	_, _ = fmt.Fprint(stream, internal.ValidationMessage)
 	input := make([]byte, 1)
 	_, err = syscall.Read(in, input)
 	if err != nil {
 		return 0, fmt.Errorf("unable to read from user STDIN: %w", err)
 	}
-	fmt.Fprintln(stream, internal.ValidationMessageBannor)
+	_, _ = fmt.Fprintln(stream, internal.ValidationMessageBannor)
 
 	return input[0], nil
 }

@@ -4,7 +4,7 @@ import (
 	"os/exec"
 	"time"
 
-	"gopkg.in/alessio/shellescape.v1"
+	"al.essio.dev/pkg/shellescape"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"

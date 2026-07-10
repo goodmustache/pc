@@ -42,7 +42,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 func CreateCommand(tt string, args ...any) *exec.Cmd {
 	f, err := os.CreateTemp("", "pc-int-test-*")
 	Expect(err).ToNot(HaveOccurred())
-	defer f.Close()
+	defer f.Close() //nolint:errcheck
 	defer f.Chmod(0755) //nolint:errcheck
 	DeferCleanup(func() {
 		os.RemoveAll(f.Name())

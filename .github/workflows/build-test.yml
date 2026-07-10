@@ -13,7 +13,7 @@ jobs:
   test:
     strategy:
       matrix:
-        go: ["1.18", "1.19"]
+        go: ["1.25"]
         os: [macos-latest, ubuntu-latest]
     name: "build and test"
     runs-on: ${{ matrix.os }}
